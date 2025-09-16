@@ -1,0 +1,63 @@
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+        <ion-menu-button slot="start"></ion-menu-button>
+      </ion-buttons>
+      <ion-title style="text-align: center;">
+        My Orders
+      </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col size="12">
+        <div *ngIf="spinner" class="spinnerSection" style="text-align: center;">
+            <ion-spinner name="lines"></ion-spinner>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row> 
+      <ion-col size="12">
+        <div *ngIf="noOrders" style="text-align: center;">
+          <ion-text>There is no order to show!</ion-text>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="my-orders">
+    <ion-card *ngFor="let order of allOrders">
+      <ion-card-content>
+        <ion-row>
+          <ion-col size-lg="12" size-xs="12">
+            <strong>Name: </strong> {{order.billing.first_name}} {{order.billing.last_name}}
+          </ion-col>
+          <ion-col size-lg="12" size-xs="12">
+            <strong>Order ID: </strong> #{{order.id}}
+          </ion-col>
+          <ion-col size-lg="12" size-xs="12">
+            <strong>Order Total: </strong> KYD ${{ order.total }}
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let metadata of order.meta_data">
+          <ion-col size-lg="12" size-xs="12" *ngIf="metadata.key == 'event_name' ">Event SuperCharged: {{metadata.value}}</ion-col>
+          <ion-col size-lg="12" size-xs="12" *ngIf="metadata.key == 'commence_date' ">Commence Date: {{metadata.value | date: 'MMMM d, y'}}</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col><ion-button color="primary" expand="block" [routerLink]="['/orders',order.id]">View Details</ion-button></ion-col>
+        </ion-row>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

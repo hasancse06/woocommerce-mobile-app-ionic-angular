@@ -1,0 +1,48 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+    <ion-title style="text-align: center;">
+      Order Successful
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+        <ion-col size="12">
+        <div *ngIf="!currentOrderData" class="spinnerSection" style="text-align: center;">
+            <ion-spinner name="lines"></ion-spinner>
+        </div>
+      </ion-col>
+      <ion-col size-lg="12" size-xs="12" *ngIf="currentOrderData">
+        <ion-row class="orderContainer">
+          <ion-col size-lg="12" size-xs="12">
+            <ion-row>
+              <ion-col size-lg="12" size-xs="12">
+                <p><strong>Your order has been placed successfully!</strong></p>
+                <p class="orderItemsLabel"><strong>Order#{{ currentOrderData.id }}</strong></p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size-lg="4" size-xs="6"><strong>Name</strong></ion-col>
+              <ion-col size-lg="4" size-xs="4"><strong>Price</strong></ion-col>
+              <ion-col size-lg="4" size-xs="2"><strong>Qty</strong></ion-col>
+            </ion-row>
+            <ion-row *ngFor="let item of currentOrderData.line_items" class="orderItems">
+              <ion-col size-lg="4" size-xs="6">{{item.name}}</ion-col>
+              <ion-col size-lg="4" size-xs="4">KYD ${{item.price}}</ion-col>
+              <ion-col size-lg="4" size-xs="2">{{item.quantity}}</ion-col>
+            </ion-row>
+            
+            <ion-row class="orderTotalDetails">
+              <ion-col size-lg="12" size-xs="12">Order Total: KYD ${{currentOrderData.total}}</ion-col>
+            </ion-row>
+          </ion-col>
+       </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

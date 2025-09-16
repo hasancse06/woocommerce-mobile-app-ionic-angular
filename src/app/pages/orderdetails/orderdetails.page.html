@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+  </ion-buttons>
+    <ion-title style="text-align: center;">
+      Order Details
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+        <ion-col size="12">
+        <div *ngIf="!order" class="spinnerSection" style="text-align: center;">
+            <ion-spinner name="lines"></ion-spinner>
+        </div>
+      </ion-col>
+      <ion-col size-lg="12" size-xs="12" *ngIf="order">
+        <ion-row class="orderContainer">
+          <ion-col size-lg="12" size-xs="12">
+            <ion-row>
+              <ion-col size-lg="12" size-xs="12">
+                <p class="orderItemsLabel"><strong>Order#{{ order.id }} / </strong>Order Items</p>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col size-lg="4" size-xs="6"><strong>Plan Name</strong></ion-col>
+              <ion-col size-lg="4" size-xs="4"><strong>Price</strong></ion-col>
+              <ion-col size-lg="4" size-xs="2"><strong>Qty</strong></ion-col>
+            </ion-row>
+            <ion-row *ngFor="let item of order.line_items" class="orderItems">
+              <ion-col size-lg="4" size-xs="6">{{item.name}}</ion-col>
+              <ion-col size-lg="4" size-xs="4">KYD ${{ item.price | number : '1.2-2' }}</ion-col>
+              <ion-col size-lg="4" size-xs="2">{{item.quantity}}</ion-col>
+            </ion-row>
+            
+            <ion-row class="orderTotalDetails">
+              <ion-col size-lg="12" size-xs="12">Order Total: KYD ${{order.total}}</ion-col>
+            </ion-row>
+
+            <ion-row *ngFor="let metadata of order.meta_data">
+              <ion-col size-lg="12" size-xs="12" *ngIf="metadata.key == 'event_name' ">Event SuperCharged: {{metadata.value}}</ion-col>
+              <ion-col size-lg="12" size-xs="12" *ngIf="metadata.key == 'commence_date' ">Commence Date: {{metadata.value | date: 'MMMM d, y'}}</ion-col>
+            </ion-row>
+          </ion-col>
+       </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

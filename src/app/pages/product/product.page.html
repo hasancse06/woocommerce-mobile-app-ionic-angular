@@ -1,0 +1,45 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+  </ion-buttons>
+    <ion-title style="text-align: center;" *ngIf="product" [innerHTML]="product.name">
+    </ion-title>
+          <ion-buttons slot="end">
+        <ion-button [routerLink]="['/cart']"> 
+        <ion-icon name="cart"> </ion-icon>
+        <ion-badge> {{ cartItems }} </ion-badge>
+        </ion-button>
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row>
+        <ion-col size="12">
+        <div *ngIf="!product" class="spinnerSection" style="text-align: center;">
+            <ion-spinner name="lines"></ion-spinner>
+        </div>
+      </ion-col>
+      <ion-col size-lg="12" size-xs="12">
+        <ion-card *ngIf="product">
+
+          <ion-slides *ngIf="product.images[0]" pager="true">
+            <ion-slide *ngFor="let image of product.images; index as i">
+              <img src="{{ product.images[i].src }}"/>
+            </ion-slide>
+          </ion-slides>
+
+            <ion-card-header>
+              <h1 style="text-align:center;" [innerHTML]="product.name"></h1>
+            </ion-card-header>
+            <ion-card-content [innerHTML]="product.description">
+
+            </ion-card-content>
+            <p style="text-align: center;" *ngIf="product.price">Price: USD ${{ product.price }}</p>
+            <ion-button color="primary" expand="block" (click)="addtoCart()">BUY NOW</ion-button>
+          </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

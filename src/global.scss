@@ -1,0 +1,168 @@
+/*
+ * App Global CSS
+ * ----------------------------------------------------------------------------
+ * Put style rules here that you want to apply globally. These styles are for
+ * the entire app and not just one component. Additionally, this file can be
+ * used as an entry point to import other CSS/Sass files to be included in the
+ * output CSS.
+ * For more information on global stylesheets, visit the documentation:
+ * https://ionicframework.com/docs/layout/global-stylesheets
+ */
+
+/* Core CSS required for Ionic components to work properly */
+@import "~@ionic/angular/css/core.css";
+
+/* Basic CSS for apps built with Ionic */
+@import "~@ionic/angular/css/normalize.css";
+@import "~@ionic/angular/css/structure.css";
+@import "~@ionic/angular/css/typography.css";
+@import '~@ionic/angular/css/display.css';
+
+/* Optional CSS utils that can be commented out */
+@import "~@ionic/angular/css/padding.css";
+@import "~@ionic/angular/css/float-elements.css";
+@import "~@ionic/angular/css/text-alignment.css";
+@import "~@ionic/angular/css/text-transformation.css";
+@import "~@ionic/angular/css/flex-utils.css";
+
+
+/* This allows the iPhone’s notch to not interfere with the screen */
+ion-header ion-toolbar:first-child {
+  padding-top: constant(safe-area-inset-top);
+  padding-top: env(safe-area-inset-top);
+}
+
+ion-card-subtitle{
+  text-transform: none;
+}
+
+  /* input field border */
+  .input{
+      border: 1px solid #000;
+  }
+
+  .native-input.sc-ion-input-ios{
+    padding-left: 10px;
+  }
+
+  // textarea style 
+
+  .item-textarea {
+    --padding-start: 0px;
+  }
+  
+  .sc-ion-textarea-md-h  {
+    --padding-start: 10px !important;
+  }
+  .sc-ion-textarea-ios-h  {
+    --padding-start: 10px !important;
+  }
+
+  
+  /* search box style */
+    input{
+      outline: none;
+    }
+    
+    :focus {
+      outline: none;
+    }
+    
+    input:focus {
+      outline: none;
+    }
+  /* search box style ends */
+
+.native-input.sc-ion-input-ios{
+  padding-left: 10px;
+}
+
+
+// top up product list page
+
+.productList{
+  background: #00b3e7;
+  color: #fff;
+  text-align: center;
+}
+
+p.productInfo {
+  line-height: 50px;
+  font-weight: bold;
+}
+
+
+
+// checkout page 
+
+.generalDetails{
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  margin-top: 30px;
+}
+
+p.generalLabel{
+  background: #f5f5f5;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  font-weight: bold;
+}
+
+.billingAddress{
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  margin-top: 30px;
+ }
+
+ p.billingLabel{
+  background: #f5f5f5;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  font-weight: bold;
+}
+
+//order success
+
+.orderContainer{
+  border: 1px solid #dddddd;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+p.orderItemsLabel{
+  background: #00b3e7;
+  color: #ffffff;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+}
+
+.orderItems{
+ border-top: 1px solid #dddddd;
+ border-bottom: 1px solid #dddddd;
+}
+
+.orderTotalDetails{
+ margin-top: 30px;
+}
+
+.alert-radio-label.sc-ion-alert-ios{
+  white-space: normal;
+}
+
+.alert-radio-label.sc-ion-alert-md{
+  white-space: normal;
+  padding-inline-end: 0px;
+}
+
+// canvas
+canvas {
+  border: 3px dashed gray;
+  width: 100%;
+}
+
+.myFablaotButton{
+  margin-bottom: 60px;
+}

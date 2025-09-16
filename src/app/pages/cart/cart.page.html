@@ -1,0 +1,98 @@
+<ion-header>
+  <ion-toolbar color="primary">
+      <ion-buttons slot="start">
+          <ion-back-button defaultHref="products"></ion-back-button>
+      </ion-buttons>
+    <ion-title>
+      Cart
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="padding-top" style="text-align: center;">
+  <div class="mid" *ngIf="cartData.length == 0">
+    <ion-row size="12" class="justify-content-center" disabled="true">
+        <ion-col>
+          <ion-card>
+              <ion-card-header>
+                <ion-card-subtitle>There is no products in your cart...!</ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content>
+                  <ion-button expand="block" color="primary"  [routerLink]="['/home']">Browse Products</ion-button>
+              </ion-card-content>
+            </ion-card>
+        </ion-col>
+      </ion-row>
+  </div>
+  <div *ngIf="cartData.length > 0">
+    <ion-row>
+      <ion-text style="padding-left:15px; padding-top:10px; padding-bottom:10px"><strong class="text">Items in Cart</strong></ion-text>
+    </ion-row>
+    <ion-row>
+      <ion-col size-lg="4" size-xs="12"  *ngFor="let item of cartData; let j = index">
+            <p style="text-align:center">{{ item.name }}</p>
+            <p style="text-align:center"> Price: USD ${{ baseProducts[j].price * baseProducts[j].quantity }}</p>
+          <img [src]="item.images[0].src" alt="item.name" />
+          <ion-button color="danger" expand="block" (click)="removeFromCart(j, item)">Remove</ion-button>
+          <ion-item>
+          <ion-label>Change Quantity</ion-label>
+            <ion-select value="brown" 
+            okText="Okay" 
+            cancelText="Dismiss" 
+            [(ngModel)]="baseProducts[j].quantity" 
+            (ionChange)="changeCartItemQty(baseProducts[j])">
+              <ion-select-option value="1">1</ion-select-option>
+              <ion-select-option value="2">2</ion-select-option>
+              <ion-select-option value="3">3</ion-select-option>
+              <ion-select-option value="4">4</ion-select-option>
+              <ion-select-option value="5">5</ion-select-option>
+            </ion-select>
+          </ion-item>
+      </ion-col>
+      </ion-row> 
+
+      <div style="margin-top: 30px;"> </div>
+    <ion-row size="12" disabled="true">
+      <ion-button style="margin:auto" fill="outline" color="primary" [routerLink]="['/home']">
+       Continue shopping
+      </ion-button>
+    </ion-row>
+    <div style="margin-top: 30px;"> </div>
+    <div lines="none" class="card no-margin padding-bottom">
+      <ion-row class="full padding-horizontal">
+          <ion-col size="12">
+          <ion-text><strong class="text">Order Summary</strong></ion-text>
+        </ion-col>
+        <ion-col size="9" style="text-align: left;">
+          <ion-text>Item Total</ion-text>
+        </ion-col>
+        <ion-col size="3" style="text-align: right;">
+          <ion-text>USD ${{ calculatePrice() }}</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="full">
+        <ion-col size="9" style="text-align: left;">
+          <ion-text>Shipping</ion-text>
+        </ion-col>
+        <ion-col size="3" class="text-end" style="text-align: right;">
+          <ion-text>USD $ 0</ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="full" style="text-align: left;">
+        <ion-col size="9">
+          <ion-text>Item Total</ion-text>
+        </ion-col>
+        <ion-col size="3" class="text-end" style="text-align: right;">
+          <ion-text>USD ${{ calculatePrice() }}</ion-text>
+        </ion-col>
+      </ion-row>
+      <div class="sep"></div>
+    </div>
+  </div>
+
+  <div style="margin-top: 50px;"> </div>
+  <div *ngIf="cartData.length > 0">
+    <ion-button expand="block" color="primary" [routerLink]="['/checkout']">Checkout</ion-button>
+  </div> 
+
+</ion-content>

@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="categories"></ion-back-button>
+    </ion-buttons>
+    <ion-title style="text-align: center;">
+      Products
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="spinner" class="spinnerSection" style="text-align: center;">
+            <ion-spinner name="lines"></ion-spinner>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row> 
+      <ion-col size-lg="4" size-xs="12">
+        <div *ngIf="noData" style="text-align: center;">
+          <ion-text>Products not published yet!</ion-text>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size-lg="3" size-xs="12" *ngFor="let product of products">
+        <ion-card>
+            <img *ngIf="product.images[0]" src="{{ product.images[0].src }}"/>
+            <ion-card-header>
+              <ion-card-subtitle style="text-align: center;" innerHTML="{{ product.name }}"></ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content>
+              <p style="text-align: center;" *ngIf="product.price"><span style="color: #01A299;">Price:</span> USD ${{ product.price }}</p>
+            </ion-card-content>
+            <ion-button expand="block" color="primary" [routerLink]="['/product',product.id]">View Details</ion-button>
+          </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  </ion-content>

@@ -1,0 +1,189 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button slot="start"></ion-menu-button>
+  </ion-buttons>
+  <ion-title style="text-align: center;">
+    Checkout
+  </ion-title>
+  <ion-buttons slot="end" (click)="reloadPWA()">
+    <img src="assets/icon/reload-pwa.png">
+  </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="mid" *ngIf="baseProducts.length == 0">
+    <ion-grid>
+      <ion-row size="12" class="justify-content-center" disabled="true">
+        <ion-col>
+          <ion-card>
+              <ion-card-header>
+                <ion-card-subtitle></ion-card-subtitle>
+              </ion-card-header>
+              <ion-card-content style="text-align: center;">
+                  <p>Cart is empty, please add an amount to cart first...!</p>
+                  <ion-button expand="block" color="primary"  [routerLink]="['/home']">Select Topup Amount</ion-button>
+              </ion-card-content>
+            </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div class="ion-padding" *ngIf="baseProducts.length > 0">
+    <div *ngIf="!allPaymentGateways" class="spinnerSection" style="text-align: center;">
+        <ion-spinner name="lines"></ion-spinner>
+    </div>
+    <ion-grid> 
+      <ion-row>
+        <ion-col>
+          <form *ngIf="customerData" [formGroup]="orderForm">
+            <ion-row class="billingContainer"> 
+              <ion-col size-lg="12" size-xs="12">
+                <p class="generalLabel">Billing Details</p>
+              </ion-col>
+              <ion-col size-lg="12" size-xs="12">
+              <ion-row>
+                <ion-col>
+                  <ion-text><span class="label">First Name</span></ion-text>
+                  <ion-input
+                    class="input" 
+                    type="text" 
+                    formControlName="billing_first_name"
+                  ></ion-input>
+                </ion-col>
+                <ion-col>
+                  <ion-text><span class="label">Last Name</span></ion-text>
+                  <ion-input
+                    class="input" 
+                    type="text" 
+                    formControlName="billing_last_name"
+                  ></ion-input>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-text><span class="label">Street Address 1</span></ion-text>
+                  <ion-input
+                    class="input" 
+                    type="text" 
+                    formControlName="billing_address_1"
+                  ></ion-input>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-text><span class="label">Street Address 2</span></ion-text>
+                  <ion-input
+                    class="input" 
+                    type="text" 
+                    formControlName="billing_address_2" 
+                    placeholder="Optional"
+                  ></ion-input>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-text><span class="label">Country / Region</span></ion-text>
+                  <ion-input
+                    class="input" 
+                    type="text" 
+                    formControlName="billing_country" 
+                  ></ion-input>
+                </ion-col>
+                <ion-col>
+                  <ion-text><span class="label">Town / District</span></ion-text>
+                  <ion-input
+                    class="input" 
+                    type="text" 
+                    formControlName="billing_city"
+                  ></ion-input>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-text><span class="label">Island / State</span></ion-text>
+                  <ion-input
+                    class="input" 
+                    type="text" 
+                    formControlName="billing_state" 
+                  ></ion-input>
+                </ion-col>
+                <ion-col>
+                  <ion-text><span class="label">Zipcode</span></ion-text>
+                  <ion-input
+                    class="input" 
+                    type="text" 
+                    formControlName="billing_postcode" 
+                  ></ion-input>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-text><span class="label">Phone Number</span></ion-text>
+                  <ion-input
+                    class="input" 
+                    formControlName="billing_phone" 
+                    type="number"
+                  ></ion-input>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-text><span class="label">Email</span></ion-text>
+                  <ion-input
+                    class="input" 
+                    type="text" 
+                    formControlName="billing_email" 
+                  ></ion-input>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            </ion-row>
+          </form> 
+        </ion-col>
+      </ion-row>
+      
+      <ion-row *ngIf="baseProducts">
+        <ion-col size-lg="12" size-xs="12">
+          <p class="generalLabel">Order Summary</p>
+        </ion-col>
+        <ion-col size-lg="9" size-xs="9">
+          <ion-text>Item Total</ion-text>
+        </ion-col>
+        <ion-col size-lg="3" size-xs="3" class="text-end">
+          <ion-text>USD ${{ this.totalPrice }}</ion-text>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+        <ion-list>
+            <ion-list-header>
+              <ion-label>Select payment method</ion-label>
+            </ion-list-header>
+            <ion-radio-group *ngIf="allPaymentGateways" (ionChange)="choosePaymentGateway($event)">
+              <ion-item *ngFor="let payment of allActivePaymentGateways">
+                <ion-label>{{ payment.title }}</ion-label>
+                <ion-radio slot="start" value={{payment.id}}></ion-radio>
+              </ion-item>
+            </ion-radio-group>
+          </ion-list>
+          </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col>
+            <ion-button *ngIf="isPaymentGatewaySelected" expand="block" [disabled]="disableBtn" (click)="completePurchase()"
+            ><span><strong>Confirm Order</strong></span
+            ><span *ngIf="spinner"><ion-spinner name="lines"></ion-spinner></span
+          ></ion-button>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+  </div>
+</ion-content>
+ 
+ 

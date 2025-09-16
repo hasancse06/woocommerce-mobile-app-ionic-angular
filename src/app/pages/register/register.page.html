@@ -1,0 +1,134 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="login"></ion-back-button>
+   </ion-buttons>
+      <ion-title style="text-align: center;">
+        Register
+      </ion-title>
+      <ion-buttons slot="end" (click)="reloadPWA()">
+        <img src="assets/icon/reload-pwa.png">
+      </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content>  
+
+  <ion-grid>
+    <ion-row> 
+      <ion-col size-lg="4" size-xs="12">
+        <div *ngIf="deviceOffline" style="text-align:center; color:#B21917; font-weight:500;">
+          <ion-text>Device is in offline! Please connect to a network and pull to refresh.</ion-text>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <div class="ion-padding">
+    <form #registerForm="ngForm">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <p>Enter Username</p>
+        </ion-col>
+        <ion-col size="12">
+          <ion-input 
+          class="input"
+          name="username" 
+          ngModel 
+          #uname="ngModel" 
+          [(ngModel)] = username 
+          required 
+          placeholder="Enter Username" 
+          minlength="6"
+          ></ion-input>
+        </ion-col>
+        <ion-col size="12" *ngIf="uname.touched && !uname.valid">
+          <ion-text color="danger">
+            <p class="warning" *ngIf="uname.errors.required">Please enter Username</p>
+            <p class="warning"  *ngIf="uname.errors.minlength">Username should be a minimum of 6 character long</p>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+          <ion-col size="12">
+            <p>Enter Email</p>
+          </ion-col>
+          <ion-col size="12">
+              <ion-input 
+              class="input"
+              name="email" 
+              ngModel 
+              #uemail="ngModel" 
+              [(ngModel)] = email 
+              required 
+              placeholder="Enter email" 
+              ></ion-input>
+          </ion-col>
+          <ion-col size="12" *ngIf="uemail.touched && !uemail.valid">
+              <ion-text color="danger">
+                <p class="warning">Please enter email</p>
+              </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Enter Password</p>
+          </ion-col>
+          <ion-col size="12">
+              <ion-input 
+              class="input"
+              name="password" 
+              ngModel 
+              #upass="ngModel" 
+              [(ngModel)] = password 
+              required 
+              placeholder="Enter password" 
+              type="password"
+              ></ion-input>
+          </ion-col>
+          <ion-col size="12" *ngIf="upass.touched && !upass.valid">
+              <ion-text color="danger">
+                <p class="warning">Please enter password</p>
+              </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <p>Re Enter Password</p>
+          </ion-col>
+          <ion-col size="12">
+              <ion-input 
+              class="input"
+              name="repassword" 
+              ngModel 
+              #uerpass="ngModel" 
+              [(ngModel)] = repassword 
+              required 
+              placeholder="Re Enter Username" 
+              type="password"
+              ></ion-input>
+          </ion-col>
+          <ion-col size="12" *ngIf="uerpass.touched && !uerpass.valid">
+              <ion-text color="danger">
+                <p class="warning">Please re enter password</p>
+              </ion-text>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col size="12">
+            <ion-button 
+            expand="block" 
+            color="primary" 
+            [disabled]="!registerForm.valid" 
+            (click)="signUp()"> 
+            <strong>Sign Up</strong
+              ><span *ngIf="spinner"><ion-spinner name="lines"></ion-spinner></span
+            ></ion-button>
+          </ion-col>
+        </ion-row>
+    </ion-grid>
+  </form>
+  </div>
+  </ion-content>

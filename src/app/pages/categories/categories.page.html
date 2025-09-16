@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title style="text-align: center;">
+      Categories
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-refresher slot="fixed" (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+
+  <div class="ion-padding">
+  
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <div *ngIf="spinner" class="spinnerSection" style="text-align: center;">
+            <ion-spinner name="lines"></ion-spinner>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <ion-row> 
+      <ion-col size-lg="4" size-xs="12">
+        <div *ngIf="noData" style="text-align: center;">
+          <ion-text>There is no category, please create one from admin!</ion-text>
+        </div>
+      </ion-col>
+    </ion-row>
+    
+    <ion-row>
+      <ion-col size-lg="4" size-xs="12" *ngFor="let category of categories">
+          <ion-card *ngIf="category.image">
+              <img src="{{ category.image.src }}" alt="" />
+              <ion-card-header>
+                <ion-card-title style="text-align: center;">
+                  {{  category.name }} 
+                  <ion-badge>{{ category.count }}</ion-badge>
+                </ion-card-title>
+              </ion-card-header>
+              <ion-button expand="block" color="primary" [routerLink]="['/products', category.id]">View Products</ion-button>
+          </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  </div>
+  </ion-content>
