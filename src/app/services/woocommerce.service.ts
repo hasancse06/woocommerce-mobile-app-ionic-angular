@@ -25,11 +25,8 @@ export class WoocommerceService {
   jwtPart = '/wp-json/jwt-auth/v1/token';
   userPart = '/wp-json/wp/v2/users/';
   woocomPart: string = '/wp-json/wc/v3/';
-  //consumerKey: string = 'ck_woocoomerce_api_consumer_key';
-  //consumerSecret: string = 'cs_woocoomerce_api_secret_key';
-
-  consumerKey: string = 'ck_960b34d917a42340ea64e443e7902daee81243f2';
-  consumerSecret: string = 'cs_40f62c2909d93fb0d9a5dd082a4fd95976595655';
+  consumerKey: string = 'ck_woocoomerce_api_consumer_key';
+  consumerSecret: string = 'cs_woocoomerce_api_secret_key';
 
   constructor(private http: HttpClient) { }
 
